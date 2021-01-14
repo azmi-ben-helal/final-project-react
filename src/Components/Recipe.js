@@ -1,23 +1,22 @@
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const Recipe = (props) => {
   return (
     <div>
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '20rem', height: '35rem', marginTop: '20px' }}>
         <Card.Img variant="top" src={props.recipe.image} />
         <Card.Body>
           <Card.Title>{props.recipe.label}</Card.Title>
-          <Card.Text>
-            {props.recipe.ingredients.map((ingredient) => (
-              <li>{ingredient.text}</li>
-            ))}
-          </Card.Text>
+          <h4>ingredients</h4>
+          <PerfectScrollbar style={{ height: '150px' }}>
+            <Card.Text>
+              {props.recipe.ingredients.map((ingredient) => (
+                <li>{ingredient.text}</li>
+              ))}
+            </Card.Text>
+          </PerfectScrollbar>
         </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>Cras justo odio</ListGroupItem>
-          <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-          <ListGroupItem>Vestibulum at eros</ListGroupItem>
-        </ListGroup>
       </Card>
     </div>
   )

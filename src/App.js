@@ -2,7 +2,7 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Recipe from './Components/Recipe'
-import { Container, Row } from 'react-bootstrap'
+import { Container, Row, Alert } from 'react-bootstrap'
 
 function App() {
   const APP_ID = process.env.REACT_APP_ID
@@ -45,12 +45,18 @@ function App() {
             Search
           </button>
         </form>
-        <Row>
-          {recipes.map((recipe) => (
-            <div key={recipe.recipe.label}>
-              <Recipe recipe={recipe.recipe} />
-            </div>
-          ))}
+        <Row className="d-flex">
+          {recipes.length > 0 ? (
+            recipes.map((recipe) => (
+              <div className="mx-auto" key={recipe.recipe.label}>
+                <Recipe recipe={recipe.recipe} />
+              </div>
+            ))
+          ) : (
+            <Alert className="mx-auto" variant="danger">
+              There is no recipe available for your search please try again
+            </Alert>
+          )}
         </Row>
       </Container>
     </div>
