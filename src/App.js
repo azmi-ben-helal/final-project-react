@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import Recipe from './Components/Recipe'
+import { Container, Row } from 'react-bootstrap'
 
 function App() {
+  const APP_ID = process.env.REACT_APP_ID
+  const APP_KEY = process.env.REACT_APP_KEY
+  const [query, setQuery] = useState('chicken')
+  const URL = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
+  const [recipes, setRecipes] = useState([])
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    getRecipes()
+  }, [query])
+
+  const getRecipes = async () => {
+    const response = await axios.get(URL)
+    setRecipes(response.data.hits)
+  }
+
+  const updateSearch = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const getSearch = (e) => {
+    e.preventDefault()
+    setQuery(search)
+    setSearch('')
+  }
+  console.log(recipes)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container fluid>
+        <form onSubmit={getSearch} className="search-from">
+          <input
+            className="search-bar"
+            type="text"
+            value={search}
+            onChange={updateSearch}
+          />
+          <button className="search-button" type="submit">
+            Search
+          </button>
+        </form>
+        <Row>
+          {recipes.map((recipe) => (
+            <div key={recipe.recipe.label}>
+              <Recipe recipe={recipe.recipe} />
+            </div>
+          ))}
+        </Row>
+      </Container>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
