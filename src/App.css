@@ -22,3 +22,13 @@
   padding: 10px 20px;
   color: white;
 }
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 60px;
+  color: rgb(0, 10, 100);
+
+}
